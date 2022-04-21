@@ -57,7 +57,7 @@ if os.path.exists("data.db") == False:
     engine = sqlalchemy.create_engine("sqlite:///data.db")
     food_info = df.to_sql("info",con=engine,index=False)
 
-
+engine = sqlalchemy.create_engine("sqlite:///data.db")
 # In[17]:
 
 

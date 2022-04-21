@@ -11,8 +11,6 @@ import sys
 import os
 import streamlit as st
 # In[8]:
-
-
 @st.experimental_singleton
 def installff():
     os.system('sbase install geckodriver')
@@ -29,9 +27,7 @@ opt.add_argument(f'user-agent={user_agent}')
 
 # In[38]:
 
-
-
-def chewy(k):
+def chewy(k,out_queue):
 
 
     # chewy
@@ -46,7 +42,6 @@ def chewy(k):
 
     content_chewy = driver_chewy.page_source
     soup_chewy = BeautifulSoup(content_chewy,"html.parser")
-    driver_chewy.close()
     n = soup_chewy.findAll('div',attrs={'class':'ProductListing_kibProductCard__3KgKt js-tracked-product kib-product-card'})
     if len(n) != 0:
         for a in n[:min(5,len(n))-1]:
@@ -54,7 +49,7 @@ def chewy(k):
             name=a['data-name']
 
             website_chewy.append('chewy')
-            prices_chewy.append('$'+price)
+            prices_chewy.append(price)
             names_chewy.append(name.strip())
 
     else:
@@ -66,7 +61,7 @@ def chewy(k):
     d = {'Name':names_chewy,'Price':prices_chewy,'Sold by':website_chewy}
     df = pd.DataFrame(d)
 
-    return [df,url_chewy]
+    out_queue.put([df,url_chewy])
 
 
 
@@ -77,7 +72,9 @@ def chewy(k):
 
 
 
-def petsmart(k):    #petsmart
+def petsmart(k,out_queue):    #petsmart
+
+
     driver_petsmart = webdriver.Firefox(options=opt)
     url_petsmart = "https://www.petsmart.com/search/?q=cat%20wet%20food%20"+k+"&ps=undefined"
     driver_petsmart.get(url_petsmart)
@@ -88,7 +85,6 @@ def petsmart(k):    #petsmart
 
     content_petsmart = driver_petsmart.page_source
     soup_petsmart = BeautifulSoup(content_petsmart,"html.parser")
-    driver_petsmart.close()
     n = soup_petsmart.findAll('li',attrs={'class':'grid-tile gtm-grid-tile col-md-4 col-sm-12'})
     if len(n) != 0:
         for a in n[:min(5,len(n))-1]:
@@ -97,8 +93,8 @@ def petsmart(k):    #petsmart
                 price=a.find('span', attrs={'class':'price-sales'})
             name=a.find('div', attrs={'class':'product-name'})
 
-            website_petsmart.append('pet-smart')
-            prices_petsmart.append('$'+price["data-gtm-price"])
+            website_petsmart.append('petsmart')
+            prices_petsmart.append(price["data-gtm-price"])
             names_petsmart.append(name.text.strip())
 
     else:
@@ -110,14 +106,16 @@ def petsmart(k):    #petsmart
     d = {'Name':names_petsmart,'Price':prices_petsmart,'Sold by':website_petsmart}
     df = pd.DataFrame(d)
 
-    return [df,url_petsmart]
+    out_queue.put([df,url_petsmart])
 
 
 # In[40]:
 
 
 
-def petco(k):    #petco
+def petco(k,out_queue):    #petco
+
+    
     driver_petco = webdriver.Firefox(options=opt)
 
 
@@ -131,7 +129,6 @@ def petco(k):    #petco
 
     content_petco = driver_petco.page_source
     soup_petco = BeautifulSoup(content_petco,"html.parser")
-    driver_petco.close()
     n = soup_petco.findAll('div',attrs={'class':'product-info'})
     if len(n) != 0:
         for a in n[:min(5,len(n))-1]:
@@ -155,24 +152,37 @@ def petco(k):    #petco
     d = {'Name':names_petco,'Price':prices_petco,'Sold by':website_petco}
     df = pd.DataFrame(d)
 
-    return [df,url_petco]
+    out_queue.put([df,url_petco])
 
 
 # In[ ]:
+from threading import Thread
+import queue
 
 
 def search_price(k):
     k = k.replace(' ','%20')
+    my_queue1 = queue.Queue()
+    my_queue2 = queue.Queue()
+    my_queue3 = queue.Queue()
 
+    ret_1 = Thread(target = petsmart,args=(k,my_queue1))
+    ret_2 = Thread(target = chewy,args=(k,my_queue2))
+    ret_3 = Thread(target = petco,args=(k,my_queue3))
+    ret_1.start()
+    ret_2.start()
+    ret_3.start()
 
-    ret1 = chewy(k)
-    ret2 = petsmart(k)
-    ret3 = petco(k)
+    ret1 = my_queue1.get()
+    ret2 = my_queue2.get()
+    ret3 = my_queue3.get()
 
+    ret_1.join()
+    ret_2.join()
+    ret_3.join()
 
     result = [pd.concat([ret1[0],ret2[0],ret3[0]]),ret1[1],ret2[1],ret3[1]]
     return result
-
 
 # In[ ]:
 
