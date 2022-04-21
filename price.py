@@ -2,10 +2,6 @@
 # coding: utf-8
 
 # In[3]:
-pip3 install selenium
-pip3 install chromedriver-binary-auto
-pip3 install beautifulsoup4
-pip3 install ray
 
 from selenium import webdriver
 import chromedriver_binary
