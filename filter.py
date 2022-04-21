@@ -3,7 +3,7 @@
 
 # In[1]:
 
-
+import streamlit as st
 import requests
 import sys
 import json
@@ -76,7 +76,7 @@ engine = sqlalchemy.create_engine("sqlite:///data.db")
 
 # In[9]:
 
-
+@st.cache(ttl=24*3600)
 def filter_df(company,flavor,pre,pro_0,pro_1,fat_0,fat_1,car_0,car_1):
     query = "select * from info where (COM like '%{0}%') and (FLA like '%{1}%') and {2}(PRO between {3} and {4}) and (FAT between {5} and {6}) and (CAR between {7} and {8})".format(company,flavor,pre,pro_0,pro_1,fat_0,fat_1,car_0,car_1)
     output = pd.read_sql(query,con=engine,index_col=None)
