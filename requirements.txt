@@ -1,6 +1,5 @@
-selenium
-chromedriver-binary-auto
 
+seleniumbase
 beautifulsoup4
 ray
 click==8.0
