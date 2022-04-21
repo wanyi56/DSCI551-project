@@ -46,6 +46,7 @@ def chewy(k):
 
     content_chewy = driver_chewy.page_source
     soup_chewy = BeautifulSoup(content_chewy,"html.parser")
+    driver_chewy.close()
     n = soup_chewy.findAll('div',attrs={'class':'ProductListing_kibProductCard__3KgKt js-tracked-product kib-product-card'})
     if len(n) != 0:
         for a in n[:min(5,len(n))-1]:
@@ -87,6 +88,7 @@ def petsmart(k):    #petsmart
 
     content_petsmart = driver_petsmart.page_source
     soup_petsmart = BeautifulSoup(content_petsmart,"html.parser")
+    driver_petsmart.close()
     n = soup_petsmart.findAll('li',attrs={'class':'grid-tile gtm-grid-tile col-md-4 col-sm-12'})
     if len(n) != 0:
         for a in n[:min(5,len(n))-1]:
@@ -129,6 +131,7 @@ def petco(k):    #petco
 
     content_petco = driver_petco.page_source
     soup_petco = BeautifulSoup(content_petco,"html.parser")
+    driver_petco.close()
     n = soup_petco.findAll('div',attrs={'class':'product-info'})
     if len(n) != 0:
         for a in n[:min(5,len(n))-1]:
