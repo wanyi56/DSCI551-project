@@ -8,7 +8,6 @@ from selenium.webdriver import FirefoxOptions
 from bs4 import BeautifulSoup
 import pandas as pd
 import sys
-import ray
 import os
 import streamlit as st
 # In[8]:
@@ -31,7 +30,7 @@ opt.add_argument(f'user-agent={user_agent}')
 # In[38]:
 
 
-@ray.remote
+
 def chewy(k):
 
 
@@ -76,7 +75,7 @@ def chewy(k):
 # In[39]:
 
 
-@ray.remote
+
 def petsmart(k):    #petsmart
     driver_petsmart = webdriver.Firefox(options=opt)
     url_petsmart = "https://www.petsmart.com/search/?q=cat%20wet%20food%20"+k+"&ps=undefined"
@@ -115,7 +114,7 @@ def petsmart(k):    #petsmart
 # In[40]:
 
 
-@ray.remote
+
 def petco(k):    #petco
     driver_petco = webdriver.Firefox(options=opt)
 
@@ -162,13 +161,11 @@ def petco(k):    #petco
 def search_price(k):
     k = k.replace(' ','%20')
 
-    ray.shutdown()
-
-    ray.init()
-    ret_id1 = chewy.remote(k)
-    ret_id2 = petsmart.remote(k)
-    ret_id3 = petco.remote(k)
-    ret1, ret2, ret3 = ray.get([ret_id1, ret_id2, ret_id3])
+  
+    ret1 = chewy.(k)
+    ret2 = petsmart.(k)
+    ret3 = petco.(k)
+    
 
     result = [pd.concat([ret1[0],ret2[0],ret3[0]]),ret1[1],ret2[1],ret3[1]]
     return result
