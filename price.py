@@ -115,7 +115,7 @@ def petsmart(k,out_queue):    #petsmart
 
 def petco(k,out_queue):    #petco
 
-    
+
     driver_petco = webdriver.Firefox(options=opt)
 
 
@@ -159,7 +159,7 @@ def petco(k,out_queue):    #petco
 from threading import Thread
 import queue
 
-
+@st.cache(ttl=24*3600)
 def search_price(k):
     k = k.replace(' ','%20')
     my_queue1 = queue.Queue()
