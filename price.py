@@ -161,11 +161,11 @@ def petco(k):    #petco
 def search_price(k):
     k = k.replace(' ','%20')
 
-  
-    ret1 = chewy.(k)
-    ret2 = petsmart.(k)
-    ret3 = petco.(k)
-    
+
+    ret1 = chewy(k)
+    ret2 = petsmart(k)
+    ret3 = petco(k)
+
 
     result = [pd.concat([ret1[0],ret2[0],ret3[0]]),ret1[1],ret2[1],ret3[1]]
     return result
