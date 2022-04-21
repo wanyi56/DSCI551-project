@@ -4,3 +4,4 @@ beautifulsoup4
 ray
 click==8.0
 sqlalchemy
+ipython==7.32.0
