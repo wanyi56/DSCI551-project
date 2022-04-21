@@ -4,6 +4,7 @@
 # In[3]:
 
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 import chromedriver_binary
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -30,7 +31,7 @@ def chewy(k):
     
 
     # chewy
-    driver_chewy = webdriver.Chrome(executable_path = '/chromedriver', chrome_options=options)
+    driver_chewy = webdriver.Chrome(executable_path = ChromeDriverManager().install(), chrome_options=options)
     # chewy
     
     url_chewy = "https://www.chewy.com/s?query=cat%20can%20"+k+"&nav-submit-button="
@@ -72,7 +73,7 @@ def chewy(k):
 
 @ray.remote
 def petsmart(k):    #petsmart
-    driver_petsmart = webdriver.Chrome(executable_path = '/chromedriver',chrome_options=options)
+    driver_petsmart = webdriver.Chrome(executable_path = ChromeDriverManager().install(),chrome_options=options)
     url_petsmart = "https://www.petsmart.com/search/?q=cat%20wet%20food%20"+k+"&ps=undefined"
     driver_petsmart.get(url_petsmart)
     
@@ -111,7 +112,7 @@ def petsmart(k):    #petsmart
 
 @ray.remote
 def petco(k):    #petco
-    driver_petco = webdriver.Chrome(executable_path = '/chromedriver',chrome_options=options)
+    driver_petco = webdriver.Chrome(executable_path = ChromeDriverManager().install(),chrome_options=options)
 
 
 

@@ -1,5 +1,6 @@
 selenium
 chromedriver-binary-auto
+webdriver_manager
 beautifulsoup4
 ray
 click==8.0
