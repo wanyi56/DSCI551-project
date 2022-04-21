@@ -2,3 +2,4 @@ selenium
 chromedriver-binary==100.0.4896.60
 beautifulsoup4
 ray
+click==8.0
