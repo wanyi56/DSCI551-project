@@ -3,7 +3,6 @@
 
 # In[1]:
 
-import streamlit as st
 import requests
 import sys
 import json
@@ -11,28 +10,14 @@ import sqlalchemy
 import pandas as pd
 import os.path
 
-
-# In[2]:
-
-
-#先把firebase变成dataframe
-
-
-# In[3]:
-
+#transfer firebase to dataframe
 
 url = 'https://dsci551-project-d7a1a-default-rtdb.firebaseio.com/.json'
 response = requests.get(url)
 js = response.json()
 
 
-# In[4]:
-
-
-#原表格名字太多空格不适合当sql的指令，先改一改，最后换回来
-
-
-# In[5]:
+# rename column names to make the sql query to be easy
 
 
 df = pd.DataFrame(js)
@@ -44,39 +29,17 @@ df['COM'] = df['COM'].apply(lambda x: ' '.join(x.split()))
 
 
 
-#把dataframe变成sql
+#tranform dataframe to sql
 
-
-# In[7]:
-
-
-
-# In[8]:
 
 if os.path.exists("data.db") == False:
     engine = sqlalchemy.create_engine("sqlite:///data.db")
     food_info = df.to_sql("info",con=engine,index=False)
 
 engine = sqlalchemy.create_engine("sqlite:///data.db")
-# In[17]:
 
+# define filter function
 
-#这条括号输入指令可以展示sql 的table变成什么样了在这里验证sql 的指令
-
-
-# In[54]:
-
-
-
-# In[ ]:
-
-
-#把sql的table变回dataframe，从这里开始开始写def，把sql 指令换成你上面验证OK的,并把变量改成def的input，要return dataframe
-
-
-# In[9]:
-
-@st.cache(ttl=24*3600)
 def filter_df(company,flavor,pre,pro_0,pro_1,fat_0,fat_1,car_0,car_1):
     query = "select * from info where (COM like '%{0}%') and (FLA like '%{1}%') and {2}(PRO between {3} and {4}) and (FAT between {5} and {6}) and (CAR between {7} and {8})".format(company,flavor,pre,pro_0,pro_1,fat_0,fat_1,car_0,car_1)
     output = pd.read_sql(query,con=engine,index_col=None)
@@ -84,4 +47,4 @@ def filter_df(company,flavor,pre,pro_0,pro_1,fat_0,fat_1,car_0,car_1):
     return output
 
 
-# In[67]:
+# output dataframe
