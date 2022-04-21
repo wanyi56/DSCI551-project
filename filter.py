@@ -67,8 +67,6 @@ if os.path.exists("data.db") == False:
 # In[54]:
 
 
-engine.execute("select * from info where FLA like '%Chicken%'").fetchall()
-
 
 # In[ ]:
 
@@ -87,6 +85,3 @@ def filter_df(company,flavor,pre,pro_0,pro_1,fat_0,fat_1,car_0,car_1):
 
 
 # In[67]:
-
-
-
