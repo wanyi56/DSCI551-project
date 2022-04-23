@@ -34,7 +34,7 @@ def chewy(k,out_queue):
     driver_chewy = webdriver.Firefox(options=opt)
     # chewy
 
-    url_chewy = "https://www.chewy.com/s?query=cat%20can%20"+k+"&nav-submit-button="
+    url_chewy = "https://www.chewy.com/s?query=cat%20wet%20food%20"+k+"&nav-submit-button="
     driver_chewy.get(url_chewy)
     website_chewy = []
     prices_chewy = []
@@ -120,7 +120,7 @@ def petco(k,out_queue):    #petco
 
 
 
-    url_petco = "https://www.petco.com/shop/SearchDisplay?categoryId=&storeId=10151&catalogId=10051&langId=-1&sType=SimpleSearch&resultCatEntryType=2&showResultsPage=true&searchSource=Q&pageView=&beginIndex=0&pageSize=48&fromPageValue=search&searchKeyword=&searchTerm="+k
+    url_petco = "https://www.petco.com/shop/SearchDisplay?categoryId=&storeId=10151&catalogId=10051&langId=-1&sType=SimpleSearch&resultCatEntryType=2&showResultsPage=true&searchSource=Q&pageView=&beginIndex=0&pageSize=48&fromPageValue=search&searchKeyword=&searchTerm=cat%20wet%20food%20"+k
     driver_petco.get(url_petco)
 
     website_petco = []
