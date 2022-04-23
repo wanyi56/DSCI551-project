@@ -26,7 +26,7 @@ opt.add_argument(f'user-agent={user_agent}')
 
 
 # In[38]:
-@st.cache(ttl=24*3600)
+
 def chewy(k,out_queue):
 
 
@@ -71,7 +71,7 @@ def chewy(k,out_queue):
 # In[39]:
 
 
-@st.cache(ttl=24*3600)
+
 def petsmart(k,out_queue):    #petsmart
 
 
@@ -112,7 +112,7 @@ def petsmart(k,out_queue):    #petsmart
 # In[40]:
 
 
-@st.cache(ttl=24*3600)
+
 def petco(k,out_queue):    #petco
 
 
