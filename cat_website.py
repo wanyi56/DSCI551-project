@@ -17,7 +17,7 @@ import filter
 
 #title
 
-st.title('Cat Can food nutrition')
+st.title('Cat Wet food nutrition')
 
 url = 'https://dsci551-project-d7a1a-default-rtdb.firebaseio.com/.json'
 response = requests.get(url)
@@ -86,7 +86,7 @@ st.dataframe(filter.filter_df(company,flavor,pre,protein[0],protein[1],fat[0],fa
 
 
 #insert price searching
-
+st.title('Want to know the price?')
 p = st.text_input("search the price")
 
 
