@@ -21,6 +21,8 @@ js = response.json()
 
 
 df = pd.DataFrame(js)
+column_names = ["COMPANY", "FLAVOR or STYLE", "PROTEIN(percent)","FAT(percent)", "CARB(percent)","mg PHOS per 100 kcals","Cat food nutritional composition"]
+df = df.reindex(columns=column_names)
 column1  = df.columns
 df = df.rename(lambda x: x[0:3],axis='columns')
 column2 = df.columns
